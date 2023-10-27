@@ -7,13 +7,29 @@ import {
   Textarea,
   background,
 } from "@chakra-ui/react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Api from "../../Api";
 
 interface IProps {
   setLogged: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const Home = ({ setLogged }: IProps) => {
+  const [tokenbot, setTokenBot] = useState<string>();
+  const [chatid, setChatId] = useState<string>();
+  const [schedule, setSchedule] = useState<string>();
+  const [message, setMessage] = useState<string>();
+
+  const sendDatos = async () => {
+    try {
+      await Api.post("telegram/send", {tokenbot, chatid, schedule, message})
+      alert("Mensagem programada !")
+    } catch (error) {
+      alert("Error ao programar mensagem !")
+    }
+  };
+
   const navigate = useNavigate();
 
   const logout = () => {
@@ -49,6 +65,7 @@ const Home = ({ setLogged }: IProps) => {
             height={"1rem"}
             padding={"0.5rem"}
             borderRadius={"0.5rem"}
+            onChange={(e) => setTokenBot(e.target.value)}
           />
         </FormControl>
 
@@ -60,6 +77,20 @@ const Home = ({ setLogged }: IProps) => {
             height={"1rem"}
             padding={"0.5rem"}
             borderRadius={"0.5rem"}
+            onChange={(e) => setChatId(e.target.value)}
+          />
+        </FormControl>
+
+        <FormControl color={"black"} display={"flex"} flexDirection={"column"}>
+          <label>Data e hora de envio:</label>
+          <Input
+            id="date-time"
+            type="datetime-local"
+            width={"48rem"}
+            height={"1rem"}
+            padding={"0.5rem"}
+            borderRadius={"0.5rem"}
+            onChange={(e) => setSchedule(e.target.value)}
           />
         </FormControl>
 
@@ -71,6 +102,7 @@ const Home = ({ setLogged }: IProps) => {
             height={"3rem"}
             padding={"0.5rem"}
             borderRadius={"0.5rem"}
+            onChange={(e) => setMessage(e.target.value)}
           ></Textarea>
         </FormControl>
 
@@ -113,6 +145,7 @@ const Home = ({ setLogged }: IProps) => {
             border: "1px solid",
             background: "white",
           }}
+          onClick={sendDatos}
         >
           Programar mensagem
         </Button>
