@@ -25,10 +25,16 @@ const Home = ({ setLogged }: IProps) => {
 
   const sendDatos = async () => {
     try {
-      await Api.post("telegram/send", {tokenbot, chatid, schedule, message, images})
-      alert("Mensagem programada !")
+      await Api.post("telegram/send", {
+        tokenbot,
+        chatid,
+        schedule,
+        message,
+        images,
+      });
+      alert("Mensagem programada !");
     } catch (error) {
-      alert("Error ao programar mensagem !")
+      alert("Error ao programar mensagem !");
     }
   };
 
@@ -109,7 +115,7 @@ const Home = ({ setLogged }: IProps) => {
           ></Textarea>
         </FormControl>
 
-        <ImageUpload images={images} setImages={setImages} maxImages={8}/>
+        <ImageUpload images={images} setImages={setImages} maxImages={8} />
 
         <Button
           padding={"1.5rem 2.3rem"}

@@ -11,7 +11,7 @@ interface ImageUploadProps {
 const ImageUpload = ({ images, setImages, maxImages }: ImageUploadProps) => {
   const handleImageDrop = (acceptedFiles: Blob[]) => {
     if (images.length + acceptedFiles.length > maxImages) {
-      alert(`Limite máximo de ${maxImages} imagens por mensagem atingido.`);
+      alert(`Limite máximo de ${maxImages} ${maxImages > 1 ? "imagens" : "imagem"} atingido.`);
       return;
     }
 
@@ -67,7 +67,7 @@ const ImageUpload = ({ images, setImages, maxImages }: ImageUploadProps) => {
         justifyContent={"flex-start"}
         width={"80%"}
       >
-        <span>Imagens selecionadas:</span>
+        <span style={{fontWeight: 700}}>Imagens selecionadas:</span>
         <Flex className="selected-images" justifyContent={"center"} alignItems={"center"} flexWrap="wrap">
         {images.map((image: string, index: number) => (
           <Box

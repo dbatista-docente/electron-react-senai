@@ -122,7 +122,7 @@ const Login = ({ setLogged }: IProps): JSX.Element => {
 
         <Text mt={2}>
           Ainda não tem uma conta?{" "}
-          <Link color="teal.500" href="#">
+          <Link color="teal.500" href="#register">
             Criar novo usuário
           </Link>
         </Text>
