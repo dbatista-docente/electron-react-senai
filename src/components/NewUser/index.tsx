@@ -2,18 +2,32 @@ import { Button, Flex, FormControl, FormLabel, Input } from "@chakra-ui/react";
 import ImageUpload from "../ImageUpload";
 import { useState } from "react";
 import Api from "../../Api";
+import { useNavigate } from "react-router-dom";
 
 const NewUser = () => {
   const [picture, setPicture] = useState<[] | string[]>([]);
-  
+  const [name, setName] = useState<string>();
+  const [password, setPassword] = useState<string>();
+  const [confirmPassword, setConfirmPassword] = useState<string>();
+  const [email, setEmail] = useState<string>();
+
+  const navigate = useNavigate();
+
   const sendDatos = async () => {
     try {
-      await Api.post("/user", {
-        picture,
-      });
-      alert("Usuário cadastrado !");
+      if (password !== confirmPassword) throw Error("As senhas não são iguais");
+      else {
+        await Api.post("/user", {
+          picture: picture[0],
+          name,
+          password,
+          email,
+        });
+        alert("Usuário cadastrado com sucesso !");
+        navigate("/");
+      }
     } catch (error) {
-      alert("Error ao cadastrar usuário!");
+      alert("Error ao cadastrar usuário! " + error.message);
     }
   };
 
@@ -43,6 +57,7 @@ const NewUser = () => {
           height={"1rem"}
           padding={"0.5rem"}
           borderRadius={"0.5rem"}
+          onChange={(e) => setName(e.target.value)}
         ></Input>
       </FormControl>
 
@@ -55,6 +70,7 @@ const NewUser = () => {
           height={"1rem"}
           padding={"0.5rem"}
           borderRadius={"0.5rem"}
+          onChange={(e) => setEmail(e.target.value)}
         ></Input>
       </FormControl>
 
@@ -67,6 +83,8 @@ const NewUser = () => {
           height={"1rem"}
           padding={"0.5rem"}
           borderRadius={"0.5rem"}
+          onChange={(e) => setPassword(e.target.value)}
+          
         ></Input>
       </FormControl>
 
@@ -79,6 +97,7 @@ const NewUser = () => {
           height={"1rem"}
           padding={"0.5rem"}
           borderRadius={"0.5rem"}
+          onChange={(e)=>setConfirmPassword(e.target.value)}
         ></Input>
       </FormControl>
 
