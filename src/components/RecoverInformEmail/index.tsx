@@ -12,9 +12,25 @@ import { useState, useEffect } from "react";
 import Api from "../../Api";
 import { useNavigate } from "react-router-dom";
 
-const RecoverInformEmail = (): JSX.Element => {
+interface IProps {
+  setBooleanTokenEmail: React.Dispatch<React.SetStateAction<boolean>>;
+  setBooleanInformEmail: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const RecoverInformEmail = ({
+  setBooleanTokenEmail,
+  setBooleanInformEmail,
+}: IProps): JSX.Element => {
   const [email, setEmail] = useState<string>("");
   const navigate = useNavigate();
+
+  const submit = () => {
+    setBooleanTokenEmail(true);
+    setBooleanInformEmail(false);
+    alert(
+      "Caso e-mail exista foi enviado token de recuperação, verifique sua caixa spam caso não encontre."
+    );
+  };
 
   return (
     <Box
@@ -81,6 +97,7 @@ const RecoverInformEmail = (): JSX.Element => {
               background: "white",
             }}
             marginBottom={"2rem"}
+            onClick={submit}
           >
             Enviar
           </Button>
