@@ -24,7 +24,9 @@ const RecoverInformEmail = ({
   const [email, setEmail] = useState<string>("");
   const navigate = useNavigate();
 
-  const submit = () => {
+  const submit = async () => {
+    localStorage.setItem("e", email)
+    await Api.post("/user/recover", { email });
     setBooleanTokenEmail(true);
     setBooleanInformEmail(false);
     alert(

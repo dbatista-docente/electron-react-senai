@@ -24,9 +24,20 @@ const RecoverInformTokenEmail = ({
   const [tokenEmail, setTokenEmail] = useState<string>("");
   const navigate = useNavigate();
 
-  const submit = () => {
-    setBooleanTokenEmail(false)
-    setBooleanInformNewPassword(true)
+  const submit = async () => {
+    try {
+      const email = localStorage.getItem("e");
+      console.log({ email, token: tokenEmail });
+      const response = await Api.post("auth/login-recover", {
+        email,
+        token: +tokenEmail,
+      });
+      localStorage.setItem("u", response.data);
+      setBooleanTokenEmail(false);
+      setBooleanInformNewPassword(true);
+    } catch (error) {
+      alert("Token invalido ou expirado");
+    }
   };
 
   return (

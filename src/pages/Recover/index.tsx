@@ -28,7 +28,7 @@ const Recover = () => {
         <RecoverPassword
           setBooleanInformNewPassword={setBooleanInformNewPassword}
           setBooleanInformTokenEmail={setBooleanInformTokenEmail}
-          setBooleanInforEmail={setBooleanInformEmail}
+          setBooleanInformEmail={setBooleanInformEmail}
         />
       )}
     </>
