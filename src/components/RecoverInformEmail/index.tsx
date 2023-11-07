@@ -23,10 +23,13 @@ const RecoverInformEmail = ({
 }: IProps): JSX.Element => {
   const [email, setEmail] = useState<string>("");
   const navigate = useNavigate();
+  const [loading, setLoading] = useState<boolean>(false)
 
   const submit = async () => {
     localStorage.setItem("e", email)
+    setLoading(true)
     await Api.post("/user/recover", { email });
+    setLoading(false)
     setBooleanTokenEmail(true);
     setBooleanInformEmail(false);
     alert(
@@ -100,6 +103,7 @@ const RecoverInformEmail = ({
             }}
             marginBottom={"2rem"}
             onClick={submit}
+            isLoading={loading}
           >
             Enviar
           </Button>

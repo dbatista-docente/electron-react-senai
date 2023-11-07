@@ -19,6 +19,7 @@ interface IProps {
 const Login = ({ setLogged }: IProps): JSX.Element => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false)
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,13 +30,15 @@ const Login = ({ setLogged }: IProps): JSX.Element => {
   const submit = async () => {
     try {
       const datos = { email, password };
+      setLoading(true)
       const token = await Api.post("/auth/login", datos);
+      setLoading(false)
       localStorage.setItem("t", JSON.stringify(token.data));
       setLogged(true)
       navigate("/");
       alert("Usuário Logado");
     } catch (error) {
-      console.log(error);
+      setLoading(false)
       alert(error);
     }
   };
@@ -110,6 +113,7 @@ const Login = ({ setLogged }: IProps): JSX.Element => {
           padding={"0.6rem 2rem"}
           borderRadius={"0.5rem"}
           onClick={submit}
+          isLoading={loading}
         >
           Entrar
         </Button>

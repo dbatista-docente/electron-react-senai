@@ -10,6 +10,7 @@ const NewUser = () => {
   const [password, setPassword] = useState<string>();
   const [confirmPassword, setConfirmPassword] = useState<string>();
   const [email, setEmail] = useState<string>();
+  const [loading, setLoading] = useState<boolean>(false)
 
   const navigate = useNavigate();
 
@@ -17,16 +18,19 @@ const NewUser = () => {
     try {
       if (password !== confirmPassword) throw Error("As senhas não são iguais");
       else {
+        setLoading(true)
         await Api.post("/user", {
           picture: picture[0],
           name,
           password,
           email,
         });
+        setLoading(false)
         alert("Usuário cadastrado com sucesso !");
         navigate("/");
       }
     } catch (error) {
+      setLoading(false)
       alert("Error ao cadastrar usuário! " + error.message);
     }
   };
@@ -119,6 +123,7 @@ const NewUser = () => {
           }}
           marginBottom={"2rem"}
           onClick={sendDatos}
+          isLoading={loading}
         >
           Enviar
         </Button>
